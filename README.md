@@ -28,7 +28,7 @@ There are 2 main classes (Bus & Rider) that we have to observe in differnt point
 4. Riders who come when bus is boarding have to wait for the next bus.
 
 ## Solution
-Every bus and rider runs on a separate thread where each thread is constrained using 5 semaphores. BusGenerator and RiderGenerator generate busses and riders at different time intervals which are exponentially distributed with a given mean time. WaitingArea is used track the number of riders while SemaphoreCollection stores all the semaphores.
+Every bus and rider runs on a separate thread where each thread is constrained using 4 semaphores. BusGenerator and RiderGenerator generate busses and riders at different time intervals which are exponentially distributed with a given mean time. WaitingArea is used track the number of riders while SemaphoreCollection stores all the semaphores.
 
 ## Acknowledgement
 This solution is developed by taking the insights from https://github.com/nishadi/senate-bus-problem.
