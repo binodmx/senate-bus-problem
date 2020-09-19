@@ -6,16 +6,16 @@ import java.util.concurrent.Semaphore;
 class Rider implements Runnable {
     private final int index;
     private final Semaphore waitingAreaSemaphore;
-    private final Semaphore riderEnterWaitingAreaSemaphore;
     private final Semaphore riderBoardBusSemaphore;
+    private final Semaphore busArrivalSemaphore;
     private final Semaphore busDepartureSemaphore;
 
-    public Rider(int index, Semaphore waitingAreaSemaphore, Semaphore riderEnterWaitingAreaSemaphore,
-                 Semaphore riderBoardBusSemaphore, Semaphore busDepartureSemaphore) {
+    public Rider(int index, Semaphore waitingAreaSemaphore, Semaphore riderBoardBusSemaphore,
+                 Semaphore busArrivalSemaphore, Semaphore busDepartureSemaphore) {
         this.index = index;
         this.waitingAreaSemaphore = waitingAreaSemaphore;
-        this.riderEnterWaitingAreaSemaphore = riderEnterWaitingAreaSemaphore;
         this.riderBoardBusSemaphore = riderBoardBusSemaphore;
+        this.busArrivalSemaphore = busArrivalSemaphore;
         this.busDepartureSemaphore = busDepartureSemaphore;
     }
 
@@ -25,15 +25,15 @@ class Rider implements Runnable {
             // Acquiring the semaphore in trying to enter the rider waiting area
             waitingAreaSemaphore.acquire();
 
-            // Locking waiting area until the rider enters the waiting area
-            riderEnterWaitingAreaSemaphore.acquire();
+            // Acquiring busArrivalSemaphore allowing rider to enter the waiting area before a bus comes
+            busArrivalSemaphore.acquire();
 
             // Enter waiting area and increment the ridersCount
             enterWaitingArea();
             WaitingArea.incrementRidersCount();
 
-            // Unlocking waiting area allowing other riders to enter the waiting area
-            riderEnterWaitingAreaSemaphore.release();
+            // Releasing busArrivalSemaphore allowing a bus to arrive
+            busArrivalSemaphore.release();
 
             // Acquiring the semaphore to board the bus
             riderBoardBusSemaphore.acquire();

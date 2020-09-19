@@ -5,18 +5,16 @@ import java.util.concurrent.Semaphore;
  */
 public class Bus implements Runnable {
     private final int index;
-    private final Semaphore riderBoardBusSemaphore;
-    private final Semaphore riderEnterWaitingAreaSemaphore;
-    private final Semaphore busDepartureSemaphore;
     private final Semaphore busArrivalSemaphore;
+    private final Semaphore busDepartureSemaphore;
+    private final Semaphore riderBoardBusSemaphore;
 
     public Bus(int index, Semaphore busArrivalSemaphore, Semaphore busDepartureSemaphore,
-               Semaphore riderBoardBusSemaphore, Semaphore riderEnterWaitingAreaSemaphore) {
+               Semaphore riderBoardBusSemaphore) {
         this.index = index;
         this.busArrivalSemaphore = busArrivalSemaphore;
         this.busDepartureSemaphore = busDepartureSemaphore;
         this.riderBoardBusSemaphore = riderBoardBusSemaphore;
-        this.riderEnterWaitingAreaSemaphore = riderEnterWaitingAreaSemaphore;
     }
 
     @Override
@@ -27,9 +25,6 @@ public class Bus implements Runnable {
 
             // Arrival of the bus
             arrive();
-
-            // Locking waiting area, new riders have to wait until bus departs
-            riderEnterWaitingAreaSemaphore.acquire();
 
             // Checking if there are waiting riders
             System.out.println("Waiting rider count: " + WaitingArea.getRidersCount());
@@ -44,10 +39,7 @@ public class Bus implements Runnable {
             // Departure of the bus
             depart();
 
-            // Unlocking waiting area, allowing new riders to enter the waiting area
-            riderEnterWaitingAreaSemaphore.release();
-
-            // Releasing busArrivalSemaphore, allowing next bus to come
+            // Releasing busArrivalSemaphore, allowing next bus or rider to come
             busArrivalSemaphore.release();
         } catch (InterruptedException e) {
             e.printStackTrace();

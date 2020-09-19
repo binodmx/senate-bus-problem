@@ -24,8 +24,7 @@ public class BusGenerator implements Runnable {
                         busIndex,
                         SemaphoreCollection.getBusArrivalSemaphore(),
                         SemaphoreCollection.getBusDepartureSemaphore(),
-                        SemaphoreCollection.getRiderBoardBusSemaphore(),
-                        SemaphoreCollection.getRiderEnterWaitingAreaSemaphore()
+                        SemaphoreCollection.getRiderBoardBusSemaphore()
                 );
                 (new Thread(bus)).start();
 

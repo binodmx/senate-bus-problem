@@ -23,8 +23,8 @@ public class RiderGenerator implements Runnable {
                 Rider rider = new Rider(
                         riderIndex,
                         SemaphoreCollection.getWaitingAreaSemaphore(),
-                        SemaphoreCollection.getRiderEnterWaitingAreaSemaphore(),
                         SemaphoreCollection.getRiderBoardBusSemaphore(),
+                        SemaphoreCollection.getBusArrivalSemaphore(),
                         SemaphoreCollection.getBusDepartureSemaphore()
                 );
                 (new Thread(rider)).start();

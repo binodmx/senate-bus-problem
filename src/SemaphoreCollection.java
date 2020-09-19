@@ -7,9 +7,6 @@ public class SemaphoreCollection {
     // Semaphore used for riders to come the waiting area, allowing 50 riders to the waiting area
     private static final Semaphore waitingAreaSemaphore = new Semaphore(50);
 
-    // Semaphore used for riders to enter the waiting area
-    private static final Semaphore riderEnterWaitingAreaSemaphore = new Semaphore(1);
-
     // Semaphore used for riders to board the bus
     private static final Semaphore riderBoardBusSemaphore = new Semaphore(0);
 
@@ -22,11 +19,6 @@ public class SemaphoreCollection {
     // Method to get the waitingAreaSemaphore
     public static Semaphore getWaitingAreaSemaphore() {
         return waitingAreaSemaphore;
-    }
-
-    // Method to get the riderEnterWaitingAreaSemaphore
-    public static Semaphore getRiderEnterWaitingAreaSemaphore() {
-        return riderEnterWaitingAreaSemaphore;
     }
 
     // Method to get the riderBoardBusSemaphore
